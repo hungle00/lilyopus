@@ -67,5 +67,7 @@ group :test do
 end
 
 gem "tailwindcss-ruby", "~> 4.0"
-
 gem "tailwindcss-rails", "~> 4.2"
+
+gem "solid_queue", "~> 1.1"
+gem "mission_control-jobs", "~> 1.0"
