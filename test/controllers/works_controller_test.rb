@@ -1,8 +1,8 @@
 require "test_helper"
 
-class LilyOpusControllerTest < ActionDispatch::IntegrationTest
+class WorksControllerTest < ActionDispatch::IntegrationTest
   test "should get index" do
-    get lily_opus_index_url
+    get works_url
     assert_response :success
   end
 end
