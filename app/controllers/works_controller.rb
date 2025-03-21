@@ -12,8 +12,14 @@ class WorksController < ApplicationController
     if @work.save
       redirect_to @work, notice: 'Opus was successfully created.'
     else
-      render :new, notice: 'Opus was successfully created.'
+      render :new, notice: 'Opus was failed to create.'
     end
+  end
+
+  def convert
+    @work = Work.new(lily_file: params[:lily_file])
+    @work.process_lilypond_file
+    head :accepted
   end
 
   private

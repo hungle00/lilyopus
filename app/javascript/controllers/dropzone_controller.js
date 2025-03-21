@@ -91,6 +91,7 @@ class DirectUploadController {
   createHiddenInput() {
     const input = document.createElement("input");
     input.type = "hidden";
+    input.id = "hidden-input-file"
     input.name = this.source.inputTarget.name;
     insertAfter(input, this.source.inputTarget);
     return input;

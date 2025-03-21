@@ -10,5 +10,7 @@ Rails.application.routes.draw do
   # Defines the root path route ("/")
   root "page#welcome"
 
-  resources :works, only: [:show, :new, :create]
+  resources :works, only: [:show, :new, :create] do
+    get :convert, on: :collection
+  end
 end

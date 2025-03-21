@@ -13,9 +13,10 @@ class Lilypond
   end
 
   def transcript_ly
-     fork { 
+    fork { 
       exec("lilypond -dno-point-and-click -o #{output_file} #{input_file}") 
     }
+    output_file
   end
 
   private

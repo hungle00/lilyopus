@@ -22,15 +22,21 @@
       data-controller="dropzone"
       data-dropzone-max-file-size="2"
       data-dropzone-max-files="1">
-    <%= form.file_field :lily_file, direct_upload: true, data: { 'dropzone-target': 'input' }, class: "input" %>
+    <%= form.file_field :lily_file, direct_upload: true, class: "input",
+      data: { 'dropzone-target': 'input', 'create-work-target': 'file' } %>
     <div class="dropzone-msg dz-message needsclick text-gray-600">
       <h3 class="dropzone-msg-title">Drag here to upload or click here to browse</h3>
       <span class="dropzone-msg-desc text-sm">2 MB file size maximum. Allowed file types .ly.</span>
       </div>
     </div>
   </div>
+  <div class="flex justify-between mb-6">
+    <div class="inline">
+      <button class="btn btn-primary" data-action="create-work#convert">Convert</button>
+    </div>
 
-  <div class="inline mb-6">
-    <%= form.submit class: "btn btn-primary" %>
+    <div class="hidden">
+      <%= form.submit class: "btn btn-primary", data: { 'action': 'create-work#submit' } %>
+    </div>
   </div>
 <% end %>
