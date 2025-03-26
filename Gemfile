@@ -52,7 +52,7 @@ end
 group :development do
   # Use console on exceptions pages [https://github.com/rails/web-console]
   gem "web-console"
-
+  gem "pry-rails"
   # Add speed badges [https://github.com/MiniProfiler/rack-mini-profiler]
   # gem "rack-mini-profiler"
 
@@ -73,3 +73,11 @@ gem "solid_queue", "~> 1.1"
 gem "mission_control-jobs", "~> 1.0"
 
 gem "solid_cable", "~> 3.0"
+
+gem "dockerfile-rails", ">= 1.7", :group => :development
+
+gem "litestream", "~> 0.12.0"
+
+gem "redis", "~> 5.4"
+
+gem "aws-sdk-s3", "~> 1.182", :require => false
