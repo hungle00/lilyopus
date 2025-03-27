@@ -11,7 +11,8 @@ WORKDIR /rails
 ENV RAILS_ENV="production" \
     BUNDLE_DEPLOYMENT="1" \
     BUNDLE_PATH="/usr/local/bundle" \
-    BUNDLE_WITHOUT="development"
+    BUNDLE_WITHOUT="development" \
+    LILYPOND_VERSION="2.25.1"
 
 
 # Throw-away build stage to reduce size of final image
@@ -20,6 +21,12 @@ FROM base as build
 # Install packages needed to build gems
 RUN apt-get update -qq && \
     apt-get install --no-install-recommends -y build-essential git libvips pkg-config libjemalloc2 sqlite3
+
+ADD https://gitlab.com/lilypond/lilypond/-/releases/v${LILYPOND_VERSION}/downloads/lilypond-${LILYPOND_VERSION}-linux-x86_64.tar.gz ./
+
+RUN tar xf ./lilypond-${LILYPOND_VERSION}-linux-x86_64.tar.gz && \
+    mv lilypond-${LILYPOND_VERSION} /rails/lilypond/ && \
+    rm lilypond-${LILYPOND_VERSION}-linux-x86_64.tar.gz
 
 # Install application gems
 COPY Gemfile Gemfile.lock ./
@@ -48,6 +55,9 @@ RUN apt-get update -qq && \
 # Copy built artifacts: gems, application
 COPY --from=build /usr/local/bundle /usr/local/bundle
 COPY --from=build /rails /rails
+
+COPY lilyfy.sh /rails/lilypond/bin
+ENV PATH="/rails/lilypond/bin:${PATH}"
 
 # Run and own only the runtime files as a non-root user for security
 RUN useradd rails --create-home --shell /bin/bash && \
