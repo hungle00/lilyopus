@@ -12,5 +12,8 @@ Rails.application.routes.draw do
 
   resources :works, only: [:show, :new, :create] do
     get :convert, on: :collection
+    get :download, on: :collection
   end
+
+  get "/library", to: "library#index"
 end

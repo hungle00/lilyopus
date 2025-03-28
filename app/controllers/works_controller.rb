@@ -22,6 +22,21 @@ class WorksController < ApplicationController
     head :accepted
   end
 
+  def download 
+    exported_file_name = params[:filename]
+
+    respond_to do |format|
+      format.pdf do
+        send_file Rails.root.join(Work::LILY_PATH, exported_file_name), type: :pdf, filename: exported_file_name
+      end
+
+      format.midi do
+        send_file Rails.root.join(Work::LILY_PATH, exported_file_name), type: :midi, filename: exported_file_name
+      end
+    end
+  end
+
+
   private
 
   def work_params

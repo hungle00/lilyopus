@@ -28,8 +28,8 @@ export default class extends Controller {
       },
     
       received({pdf, midi}) {
-        const pdfLink = `<a href='${pdf}' class='block p-2'>PDF link</a>`;
-        const midiLink = `<a href='${midi}' class='block p-2'>Midi link</a>`
+        const pdfLink = `<a href='/works/download.pdf?filename=${pdf}' class='block p-2'>PDF link</a>`;
+        const midiLink = `<a href='/works/download.midi?filename=${midi}' class='block p-2'>Midi link</a>`
         outputWrapperTarget.insertAdjacentHTML('beforeend', pdfLink)
         outputWrapperTarget.insertAdjacentHTML('beforeend', midiLink)
         outputWrapperTarget.classList.remove("hidden")

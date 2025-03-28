@@ -1,5 +1,5 @@
 class Work < ApplicationRecord
-  # after_create :process_lilypond_file, if: -> { lily_file.present? }
+  LILY_PATH = "tmp/storage/"
 
   validates :title, presence: true
 
