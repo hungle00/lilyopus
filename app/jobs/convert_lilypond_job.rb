@@ -1,17 +1,14 @@
-require 'lilypond'
-
 class ConvertLilypondJob < ApplicationJob
   queue_as :default
 
-  def perform(input_path, filename)
+  def perform(file_name)
     # Do something later
-    filename = filename.presence || self.job_id
-    output_file = [Work::LILY_PATH, filename].join("/")
-    Lilypond.new(input_path, output_file).transcript_ly
+    input_file = Rails.root.join('storage', 'uploads', file_name)
+    Lilypond::Converter.new(input_file, file_name).transcript_ly
     
     ActionCable.server.broadcast "convert_lilypond", { 
-      pdf: "#{filename}.pdf",
-      midi: "#{filename}.midi"
+      pdf: "#{file_name}.pdf",
+      midi: "#{file_name}.midi"
     }
   end
 end

@@ -11,8 +11,10 @@ Rails.application.routes.draw do
   root "page#welcome"
 
   resources :works, only: [:show, :new, :create] do
-    get :convert, on: :collection
-    get :download, on: :collection
+    collection do
+      get :convert, :download
+      post :upload_ly
+    end
   end
 
   get "/library", to: "library#index"

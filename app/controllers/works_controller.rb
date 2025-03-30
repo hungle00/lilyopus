@@ -16,9 +16,19 @@ class WorksController < ApplicationController
     end
   end
 
+  def upload_ly
+    lily_file = params[:file]
+    
+    Lilypond::Uploader.new(lily_file).save
+
+    render json: {
+      output_file: lily_file.original_filename
+    }
+  end
+
   def convert
-    @work = Work.new(lily_file: params[:lily_file])
-    @work.process_lilypond_file
+    file_name = params[:lily_file]
+    ConvertLilypondJob.perform_later(file_name) if file_name.present?
     head :accepted
   end
 
@@ -27,11 +37,11 @@ class WorksController < ApplicationController
 
     respond_to do |format|
       format.pdf do
-        send_file Rails.root.join(Work::LILY_PATH, exported_file_name), type: :pdf, filename: exported_file_name
+        send_file Rails.root.join(Lilypond::Converter::LILY_PATH, exported_file_name), type: :pdf, filename: exported_file_name
       end
 
       format.midi do
-        send_file Rails.root.join(Work::LILY_PATH, exported_file_name), type: :midi, filename: exported_file_name
+        send_file Rails.root.join(Lilypond::Converter::LILY_PATH, exported_file_name), type: :midi, filename: exported_file_name
       end
     end
   end
